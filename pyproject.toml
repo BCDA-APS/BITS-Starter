@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "my_bits_instrument"
+version = "0.0.1"
 description = ""
 readme = "README.md"
 requires-python = ">=3.11"
@@ -70,9 +71,6 @@ all = [ "apsbits[dev,doc]",]
 Homepage = "https://BCDA-APS.github.io/BITS/"
 "Bug Tracker" = "https://github.com/BCDA-APS/BITS/issues"
 
-[project.scripts]
-create-bits = "apsbits.utils.create_new_instrument:main"
-#delete-demo
 
 [tool.pytest.ini_options]
 addopts = [ "--import-mode=importlib", "-x",]
@@ -93,16 +91,12 @@ line-ending = "auto"
 
 [tool.setuptools.package-dir]
 demo_instrument = "src/demo_instrument"
-new_bits = "src/new_bits"
 
 [tool.setuptools.package-data]
 "*" = [ "*.yml",]
 
 [tool.instruments.demo_instrument]
 path = "src/demo_instrument"
-
-[tool.instruments.new_bits]
-path = "src/new_bits"
 
 [tool.ruff.lint.per-file-ignores]
 "*.ipynb" = [ "F405",]

@@ -55,9 +55,8 @@ if running_in_queueserver():
 else:
     # Import bluesky plans and stubs with prefixes set by common conventions.
     # The apstools plans and utils are imported by '*'.
+    from apsbits.utils.controls_setup import oregistry  # noqa: F401
     from apstools.plans import *  # noqa: F403
     from apstools.utils import *  # noqa: F403
     from bluesky import plan_stubs as bps  # noqa: F401
     from bluesky import plans as bp  # noqa: F401
-
-    from apsbits.utils.controls_setup import oregistry  # noqa: F401
