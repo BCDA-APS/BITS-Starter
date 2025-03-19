@@ -15,13 +15,15 @@ echo $sanitized_repo
 echo $original_repo
 
 sed -i "s/$original_repo/$sanitized_repo/g" README.md
+# Delete the "Use this template" section from README.md
+sed -i '/## Create repository from this template./,/##/d' README.md
+rm -rf docs
 
-# Call the create_new_instrument function
-create-bits "${sanitized_repo}_instrument" "src/."
+
+# Update package name in pyproject.toml
+sed -i "s/bits_instrument/${sanitized_repo}_instrument/g" pyproject.toml
+mv "src/demo_instrument" "src/${sanitized_repo}_instrument"
 
 #delete demo_instrument
-
 rm -rf .github/workflows/init_repo.sh
 rm -rf .github/workflows/init_repo.yml
-# rm -rf .github/workflows/pypi.yml
-# rm -rf .github/workflows/test.yml

@@ -3,36 +3,25 @@ requires = [ "setuptools>=64.0", "setuptools_scm[toml]>=8.0",]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "my_bits_instrument"
-description = ""
+name = "bits_instrument"
+version = "0.0.1"
+description = "BITS Instrument Package"
 readme = "README.md"
 requires-python = ">=3.11"
 keywords = []
 classifiers = []
 dependencies = [ "apsbits"]
-[[project.authors]]
-name = "Eric Codrea"
-email = "ecodrea@anl.gov"
 
-[[project.authors]]
-name = "Pete Jemian"
-email = "prjemian+instrument@gmail.com"
-
-[[project.authors]]
-name = "Rafael Vescovi"
-email = "rvescovi@anl.gov"
-
-[[project.maintainers]]
-name = "Eric Codrea"
-email = "ecodrea@anl.gov"
-
-[[project.maintainers]]
-name = "Pete Jemian"
-email = "prjemian+instrument@gmail.com"
-
-[[project.maintainers]]
-name = "Rafael Vescovi"
-email = "rvescovi@anl.gov"
+authors = [
+    { name = "Eric Codrea", email = "ecodrea@anl.gov" },
+    { name = "Pete Jemian", email = "prjemian+instrument@gmail.com" },
+    { name = "Rafael Vescovi", email = "rvescovi@anl.gov" },
+]
+maintainers = [
+    { name = "Eric Codrea", email = "ecodrea@anl.gov" },
+    { name = "Pete Jemian", email = "prjemian+instrument@gmail.com" },
+    { name = "Rafael Vescovi", email = "rvescovi@anl.gov" },
+]
 
 [tool.copyright]
 copyright = "2014-2025, APS"
@@ -64,15 +53,11 @@ file = "LICENSE"
 [project.optional-dependencies]
 dev = [ "build", "isort", "mypy", "pre-commit", "pytest", "ruff",]
 doc = [ "babel", "ipykernel", "jinja2", "markupsafe", "myst_parser", "nbsphinx", "pydata-sphinx-theme", "pygments-ipython-console", "pygments", "sphinx-design", "sphinx-tabs", "sphinx",]
-all = [ "apsbits[dev,doc]",]
+all = [ "bits_instrument[dev,doc]",]
 
 [project.urls]
 Homepage = "https://BCDA-APS.github.io/BITS/"
 "Bug Tracker" = "https://github.com/BCDA-APS/BITS/issues"
-
-[project.scripts]
-create-bits = "apsbits.utils.create_new_instrument:main"
-#delete-demo
 
 [tool.pytest.ini_options]
 addopts = [ "--import-mode=importlib", "-x",]
@@ -92,17 +77,10 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.setuptools.package-dir]
-demo_instrument = "src/demo_instrument"
-new_bits = "src/new_bits"
+"" = "src"
 
 [tool.setuptools.package-data]
 "*" = [ "*.yml",]
-
-[tool.instruments.demo_instrument]
-path = "src/demo_instrument"
-
-[tool.instruments.new_bits]
-path = "src/new_bits"
 
 [tool.ruff.lint.per-file-ignores]
 "*.ipynb" = [ "F405",]
