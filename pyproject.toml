@@ -3,7 +3,7 @@ requires = [ "setuptools>=64.0", "setuptools_scm[toml]>=8.0",]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "my_bits_instrument"
+name = "demo_instrument"
 version = "0.0.1"
 description = ""
 readme = "README.md"
@@ -65,7 +65,7 @@ file = "LICENSE"
 [project.optional-dependencies]
 dev = [ "build", "isort", "mypy", "pre-commit", "pytest", "ruff",]
 doc = [ "babel", "ipykernel", "jinja2", "markupsafe", "myst_parser", "nbsphinx", "pydata-sphinx-theme", "pygments-ipython-console", "pygments", "sphinx-design", "sphinx-tabs", "sphinx",]
-all = [ "apsbits[dev,doc]",]
+all = [ "my_instrument[dev,doc]",]
 
 [project.urls]
 Homepage = "https://BCDA-APS.github.io/BITS/"
