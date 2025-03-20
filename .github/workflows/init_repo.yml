@@ -6,7 +6,7 @@ permissions:
 
 jobs:
   rename-project:
-    if: ${{ github.repository != 'bcda-aps/bits' }}
+    if: ${{ github.repository != 'bcda-aps/demo-bits' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +22,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e apsbits
+          pip install toml
+          pip install apsbits --no-deps
       - name: Run init_repo.sh
         run: |
           set -vxeuo pipefail
