@@ -33,7 +33,7 @@ Click Create repository from template.
 export ENV_NAME=BITS_env
 conda create -y -n $ENV_NAME python=3.11
 conda activate $ENV_NAME
-
+pip install apsbits
 ```
 
 
@@ -41,7 +41,7 @@ conda activate $ENV_NAME
 ```bash
 export YOUR_INSTRUMENT_NAME=new_instrument
 create-bits $YOUR_INSTRUMENT_NAME "src/"
-pip install apsbits
+pip install -e.
 ```
 
 
