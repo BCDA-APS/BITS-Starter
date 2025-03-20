@@ -72,8 +72,6 @@ RE(sim_count_plan())
 RE(sim_rel_scan_plan())
 ```
 
-See this [example](./docs/source/demo.ipynb).
-
 ## Configuration files
 
 The files that can be configured to adhere to your preferences are:
