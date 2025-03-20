@@ -41,7 +41,7 @@ conda activate $ENV_NAME
 ```bash
 export YOUR_INSTRUMENT_NAME=new_instrument
 create-bits $YOUR_INSTRUMENT_NAME "src/"
-pip install -e ."[all]"
+pip install apsbits
 ```
 
 
