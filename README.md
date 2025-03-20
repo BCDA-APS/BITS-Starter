@@ -38,7 +38,8 @@ pip install apsbits
 
 ## Creating a New Instrument
 ```bash
-create-bits "YOUR_INSTRUMENT_NAME" "src/"
+export YOUR_INSTRUMENT_NAME=YOUR_INSTRUMENT_NAME
+create-bits $YOUR_INSTRUMENT_NAME "src/"
 pip install -e ."[all]"
 ```
 
