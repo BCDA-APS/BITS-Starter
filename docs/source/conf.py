@@ -6,12 +6,11 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import apsbits
 
 project = "APSBITS"
 copyright = "2023-2025, APS BCDA"
 author = "APS BCDA"
-version = apsbits.__version__
+version = "1.0.0"
 release = version.split("+")[0]
 if "+" in version:
     release += "..."
