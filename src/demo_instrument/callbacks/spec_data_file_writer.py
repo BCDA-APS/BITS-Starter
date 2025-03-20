@@ -10,9 +10,8 @@ from typing import Any
 from typing import Dict
 from typing import Optional
 
-from bluesky import RunEngine
-
 from apsbits.utils.config_loaders import get_config
+from bluesky import RunEngine
 
 logger = logging.getLogger(__name__)
 logger.bsdev(__file__)
