@@ -1,10 +1,6 @@
-BITS: **B**luesky **I**nstrument **T**emplate**S**
+# DEMO Instrument
 
-
-# DEMO TEMPLATE
-
-Template of a Bluesky Data Acquisition Instrument in console, notebook, &
-queueserver.
+Instrument Github Repository to be used with BITS structure at the APS
 
 ## Create repository from this template.
 
@@ -52,8 +48,11 @@ pip install apsbits
 ```
 
 
-## Edit your instrument
-
+## Creating a New Instrument
+```bash
+create-bits "YOUR_INSTRUMENT_NAME" "src/"
+pip install -e ."[all]"
+```
 
 
 ## IPython console Start
@@ -70,8 +69,7 @@ Start JupyterLab, a Jupyter notebook server, or a notebook, VSCode.
 ## Starting the BITS Package
 
 ```py
-from instrument.startup import *
-RE(make_devices())  # create all the ophyd-style control devices
+from YOUR_INSTRUMENT_NAME.startup import *
 ```
 
 ## Run Sim Plan Demo
@@ -150,14 +148,6 @@ cd ./qserver
 start-re-manager --config=./qs-config.yml
 ```
 
-## Testing
-
-Use this command to run the test suite locally:
-
-```bash
-pytest -vvv --lf ./src
-```
-
 ## Documentation
 
 <details>
@@ -194,41 +184,3 @@ Documentation can be added in these formats:
 (reStructured text), [`.md`](https://en.wikipedia.org/wiki/Markdown) (markdown),
 and [`.ipynb`](https://jupyter.org/) (Jupyter notebook). For more information,
 see the [Sphinx](https://www.sphinx-doc.org/) documentation.
-
-## Warnings
-
-### Bluesky Queueserver
-
-The QS host process writes files into the `qserver/` directory. This directory can be
-relocated. However, it should not be moved into the instrument package since
-that might be installed into a read-only directory.
-
-## How-To Guides
-### How to use the template
-
-Consider renaming this `instrument` package to be more clear that is specific to *this*
-instrument.  This will be the name by which it is `pip` installed and also used with
-`import`.  Let's use an example instrument package name `my_instrument` below to show which parts are edited.
-
-1) Click on use as template button
-2) Adjust the following parameters in the following files:
-    - `pyproject.toml`
-        - `[project]` `name =` *example: `my_instrument`*
-        - `[project.urls]`  *change URLs for your repo*
-        - `[tool.setuptools]` `package-dir = {"instrument" = "src/instrument"}` *example: `{"my_instrument" = "src/instrument"}`*
-    - `src/instrument/init.py`
-        - `__package__ = "instrument"` *example: `"my_instrument"`*
-    - `src/instrument/configs/iconfig.yml`
-        - `DATABROKER_CATALOG:` *change from `temp` to your catalog's name*
-        - `beamline_id:` *one word beamline name (such as known by APS scheduling system)*
-        - `instrument_name:` *descriptive name of your beamline*
-        - `DM_SETUP_FILE:` *Path to DM bash setup file, comment out if you do not have*
-        - `BEC:` *adjust for your preferences*
-    - `qserver/qs-config.yml`
-        - `startup_module: instrument.startup` *example: `my_instrument.startup`*
-    - `docs/source/conf.py`
-        - `import instrument` *example `import my_instrument`*
-        - `project = "instrument"` *example: `"my_instrument"`*
-        - `version = instrument.__version__` *example: `my_instrument.__version__`*
-
-- [APS Data Management Plans](./docs/source/guides/dm.md)
