@@ -16,7 +16,7 @@ echo $original_repo
 
 sed -i "s/$original_repo/$sanitized_repo/g" README.md
 # Delete the "Use this template" section from README.md
-sed -i '/## Create repository from this template./,/##/d' README.md
+sed -i '/## Create repository from this template./,/##/{/##/b; d}' README.md
 rm -rf docs
 
 
