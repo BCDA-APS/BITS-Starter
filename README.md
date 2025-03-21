@@ -13,14 +13,14 @@ Above the file list, click Use this template.
 Select Create a new repository.
 
 ![Screenshot of the "Use this template" button and the dropdown menu expanded to show the "Open in a codespace" option.
-](docs/resources/use-this-template-button.webp)
+](.github/resources/use-this-template-button.webp)
 
 Alternatively, you can open the template in a codespace and publish your work to a new repository later. For more information, see [Creating a codespace from a template](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-from-a-template).
 
 Use the Owner dropdown menu to select the account you want to own the repository.
 
 
-![Image 3](docs/resources/create-repository-owner.webp)
+![Image 3](.github/resources/create-repository-owner.webp)
 
 
 Click Create repository from template.
@@ -40,7 +40,7 @@ pip install apsbits
 ## Creating a New Instrument
 ```bash
 export YOUR_INSTRUMENT_NAME=new_instrument
-create-bits $YOUR_INSTRUMENT_NAME "src/"
+create-bits $YOUR_INSTRUMENT_NAME
 pip install -e .
 ```
 
@@ -95,7 +95,7 @@ the usual way to (re)start the QS host process. Using `restart`, the process
 runs in the background.
 
 ```bash
-./qserver/qs_host.sh restart
+/src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh restart
 ```
 
 ### Run a queueserver client GUI

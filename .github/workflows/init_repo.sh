@@ -17,12 +17,11 @@ echo $original_repo
 sed -i "s/$original_repo/$sanitized_repo/g" README.md
 # Delete the "Use this template" section from README.md
 sed -i '/## Create repository from this template./,/##/d' README.md
-rm -rf docs
 
 
 # Update package name in pyproject.toml
 sed -i "s/bits_instrument/${sanitized_repo}/g" pyproject.toml
 
-#delete demo_instrument
+rm -rf .github/resources
 rm -rf .github/workflows/init_repo.sh
 rm -rf .github/workflows/init_repo.yml
