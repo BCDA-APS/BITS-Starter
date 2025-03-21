@@ -22,7 +22,6 @@ rm -rf docs
 
 # Update package name in pyproject.toml
 sed -i "s/bits_instrument/${sanitized_repo}/g" pyproject.toml
-mv "src/demo_instrument" "src/${sanitized_repo}_instrument"
 
 #delete demo_instrument
 rm -rf .github/workflows/init_repo.sh
