@@ -89,6 +89,12 @@ will interact with that host process.
 
 ### Run a queueserver host process
 
+Install screen
+
+```bash
+sudo apt install screen
+```
+
 Use the queueserver host management script to start the QS host process.  The
 `restart` option stops the server (if it is running) and then starts it.  This is
 the usual way to (re)start the QS host process. Using `restart`, the process
