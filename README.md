@@ -101,7 +101,7 @@ the usual way to (re)start the QS host process. Using `restart`, the process
 runs in the background.
 
 ```bash
-/src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh restart
+./src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh restart
 ```
 
 ### Run a queueserver client GUI
@@ -114,11 +114,11 @@ queue-monitor &
 
 ### Shell script explained
 
-A [shell script](./qserver/qs_host.sh) is used to start the QS host process. Below
+A [shell script](https://github.com/BCDA-APS/BITS/blob/main/src/apsbits/demo_qserver/qs_host.sh) (`./src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh`) starts the QS host process. Below
 are all the command options, and what they do.
 
 ```bash
-(bstest) $ ./qserver/qs_host.sh help
+(BITS_env) $ ./src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh help
 Usage: qs_host.sh {start|stop|restart|status|checkup|console|run} [NAME]
 
     COMMANDS
