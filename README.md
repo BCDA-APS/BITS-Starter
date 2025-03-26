@@ -1,4 +1,4 @@
-# Instrument Template Repository
+# BITS Starter Repo
 
 Instrument Github Repository to be used with BITS structure at the APS
 
