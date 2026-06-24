@@ -7,7 +7,7 @@ name = "bits_instrument"
 version = "0.0.1"
 description = "BITS Instrument Package"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 keywords = []
 classifiers = []
 # https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#license
@@ -31,7 +31,7 @@ copyright = "2014-2025, APS"
 
 [tool.black]
 line-length = 115
-target-version = [ "py311",]
+target-version = [ "py312",]
 include = "\\.pyi?$"
 exclude = "(\n  /(\n      \\.eggs         # exclude a few common directories in the\n    | \\.git          # root of the project\n    | \\.hg\n    | \\.mypy_cache\n    | \\.tox\n    | \\.venv\n    | \\.pytest_cache\n    | _build\n    | build\n    | dist\n    | docs\n  )/\n)\n"
 
@@ -48,7 +48,7 @@ include_trailing_comma = true
 exclude = [ ".eggs", ".git", ".git-rewrite", ".mypy_cache", ".pytype", ".ruff_cache", ".tox", ".venv", "__pypackages__", "_build", "build", "dist", "venv", ".venv", "docs",]
 line-length = 88
 indent-width = 4
-target-version = "py311"
+target-version = "py312"
 
 [project.optional-dependencies]
 dev = [ "build", "isort", "mypy", "pre-commit", "pytest", "ruff",]
