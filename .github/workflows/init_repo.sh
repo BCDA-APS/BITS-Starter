@@ -22,8 +22,8 @@ sed -i '/## Create repository from this template./,/##/d' README.md
 # Update package name in pyproject.toml
 sed -i "s/bits_instrument/${sanitized_repo}/g" pyproject.toml
 
-# Update the pixi env name + editable self-install key to match (keeps `pixi install`
-# working; the committed pixi.lock is refreshed on the next `pixi install`).
+# Update the pixi env name + editable self-install key to match, so `pixi install`
+# works (the editable key must equal [project].name in pyproject.toml).
 sed -i "s/bits_instrument/${sanitized_repo}/g" pixi.toml
 
 rm -rf .github/resources

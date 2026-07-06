@@ -31,10 +31,69 @@ Click Create repository from template.
 
 ```bash
 export ENV_NAME=BITS_env
-conda create -y -n $ENV_NAME python=3.11
+conda create -y -n $ENV_NAME python=3.12
 conda activate $ENV_NAME
 pip install apsbits
 ```
+
+
+## Start a fresh BITS environment with pixi
+
+[pixi](https://pixi.sh) builds the entire environment from `pixi.toml` — Python,
+apsbits, the EPICS/Qt stack, and this instrument package (installed editable) —
+with no separate conda environment. It targets `linux-64` (APS workstations).
+
+After creating your repository from this template (above) and cloning it, run
+these steps from the repo root.
+
+**1. Install pixi** — see https://pixi.sh/latest/#installation
+
+**2. Build the environment** (also installs apsbits and this package, editable):
+
+```bash
+pixi install
+```
+
+**3. Scaffold your instrument** into `src/<name>/` (commonly the same name as
+your repository):
+
+```bash
+export YOUR_INSTRUMENT_NAME=new_instrument
+pixi run create-bits $YOUR_INSTRUMENT_NAME
+pixi install      # re-run so the new src/<name>/ module becomes importable
+```
+
+**4. Point the tasks at your instrument.** In `pixi.toml`, replace the
+`instrument` placeholder in the `[tasks]` table with your instrument name — it is
+used by `start`, `qs_host`, `qs_restart`, and `qs_start_manager`.
+
+**5. Start an IPython session** with your instrument loaded:
+
+```bash
+pixi run start
+```
+
+Confirm the install with the demo plans (see "Run Sim Plan Demo" below):
+
+```py
+RE(sim_print_plan())
+RE(sim_count_plan())
+RE(sim_rel_scan_plan())
+```
+
+To run the queueserver host process, use `pixi run qs_restart` (see the
+"queueserver" section).
+
+**Notes**
+
+- The template ships only `pixi.toml`. `pixi install` writes a `pixi.lock`;
+  commit it in your repository for pinned, reproducible installs — each beamline
+  manages its own.
+- Extra tool environments: `dev` (ruff, pytest, mypy, pre-commit), `doc`
+  (Sphinx), `all`. Use them with, e.g., `pixi install -e dev` or
+  `pixi run -e dev pytest`.
+- Creating the repo from this template runs `init_repo.sh`, which renames the
+  package in `pixi.toml` and `pyproject.toml` to your repository name.
 
 
 ## Creating a New Instrument

@@ -24,12 +24,14 @@ bluesky-base = "==1.14.4"
 bluesky-queueserver = "*"
 matplotlib-base= ">=3.9.3,<4"
 networkx = ">=3.4.2,<4"
-numpy = "*"
+# Cap below 2.5: apsbits's tiled[all] pulls numba, which has no numpy>=2.5 build yet.
+numpy = "<2.5"
 ophyd = "==1.11.0"
 pyepics = "*"
 python = ">=3.12,<3.13"
 semver = ">=3.0.4,<4"
-tiled-client = "==0.1.0b39"
+# tiled is resolved via pip from apsbits's `tiled[all]` requirement (needs >=0.2.9);
+# the old conda `tiled-client==0.1.0b39` pin conflicts with apsbits 2.x.
 colorlog = ">=6.9.0,<7"
 pydantic-numpy = "*"
 hdf5-external-filter-plugins = ">=0.1.0,<0.2"
@@ -55,9 +57,11 @@ tomlkit = ">=0.13.3,<0.14"
 ipython = ">=9.5.0,<10"
 
 [pypi-dependencies]
-apsbits = ">=1.0.5, <2"
+apsbits = "==2.0.3"
 ophyd-async = { version = ">0.10.0", extras = ["ca", "pva"] }
-11bm-bits = { path = ".", editable = true }
+# Editable install of this instrument. This key MUST equal [project].name in
+# pyproject.toml; init_repo.sh renames both to the repository name on first push.
+bits_instrument = { path = ".", editable = true }
 
 [feature.dev.dependencies]
 isort = "*"
@@ -80,7 +84,10 @@ sphinx = "*"
 myst-parser = ">=4.0.1,<5"
 
 [tasks]
-qs_restart = "src/bm11_b_qserver/qs_host.sh restart"
-qs_host = "src/bm11_b_qserver/qs_host.sh"
-qs_start_manager = { cmd = "start-re-manager --config=./qs-confdig.yml", cwd = "qserver" }
-start = { cmd = "ipython -i -c 'from bm11_b.startup import *'", env = { MPLBACKEND = "qt5agg" } }
+# TODO: after `create-bits <name>`, replace `instrument` below with that name.
+# create-bits scaffolds the module at src/<name>/, the qserver config at
+# src/<name>/qserver/qs-config.yml, and the host script at scripts/<name>_qs_host.sh.
+start = { cmd = "ipython -i -c 'from instrument.startup import *'", env = { MPLBACKEND = "qt5agg" } }
+qs_host = "scripts/instrument_qs_host.sh"
+qs_restart = "scripts/instrument_qs_host.sh restart"
+qs_start_manager = { cmd = "start-re-manager --config=./qs-config.yml", cwd = "src/instrument/qserver" }
