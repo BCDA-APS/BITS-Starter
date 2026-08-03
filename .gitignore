@@ -161,13 +161,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# setuptools_scm
-_version.py
-
 # Developer content
 dev_*
 
-qserver/existing_plans_and_devices.yaml
+**/existing_plans_and_devices.yaml
 .vscode/
 .logs/
 *.dat

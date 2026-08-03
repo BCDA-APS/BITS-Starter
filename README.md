@@ -27,15 +27,22 @@ Click Create repository from template.
 
 ##
 
-## Installing your own BITS instrument
+## Start a fresh BITS environment with Conda
 
 ```bash
 export ENV_NAME=BITS_env
-conda create -y -n $ENV_NAME python=3.11
+conda create -y -n $ENV_NAME python=3.12
 conda activate $ENV_NAME
 pip install apsbits
 ```
 
+## Start a fresh BITS environment with pixi
+
+**Build the environment** (also installs apsbits and this package, editable):
+
+```bash
+pixi install
+```
 
 ## Creating a New Instrument
 ```bash
@@ -79,8 +86,8 @@ RE(sim_rel_scan_plan())
 The files that can be configured to adhere to your preferences are:
 
 - `configs/iconfig.yml` - configuration for data collection
-- `configs/logging.yml` - configuration for session logging to console and/or files
-- `qserver/qs-config.yml`    - contains all configuration of the QS host process. See the [documentation](https://blueskyproject.io/bluesky-queueserver/manager_config.html) for more details of the configuration.
+- `configs/extra_logging.yml` - configuration for session logging to console and/or files
+- `src/YOUR_INSTRUMENT_NAME/qserver/qs-config.yml`    - contains all configuration of the QS host process. See the [documentation](https://blueskyproject.io/bluesky-queueserver/manager_config.html) for more details of the configuration.
 
 ## queueserver
 
@@ -101,7 +108,7 @@ the usual way to (re)start the QS host process. Using `restart`, the process
 runs in the background.
 
 ```bash
-./src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh restart
+./scripts/YOUR_INSTRUMENT_NAME_qs_host.sh restart
 ```
 
 ### Run a queueserver client GUI
@@ -114,11 +121,11 @@ queue-monitor &
 
 ### Shell script explained
 
-A [shell script](https://github.com/BCDA-APS/BITS/blob/main/src/apsbits/demo_qserver/qs_host.sh) (`./src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh`) starts the QS host process. Below
+A [shell script](https://github.com/BCDA-APS/BITS/blob/main/src/apsbits/demo_qserver/qs_host.sh) (`./scripts/YOUR_INSTRUMENT_NAME_qs_host.sh`) starts the QS host process. Below
 are all the command options, and what they do.
 
 ```bash
-(BITS_env) $ ./src/YOUR_INSTRUMENT_NAME_qserver/qs_host.sh help
+(BITS_env) $ ./scripts/YOUR_INSTRUMENT_NAME_qs_host.sh help
 Usage: qs_host.sh {start|stop|restart|status|checkup|console|run} [NAME]
 
     COMMANDS
@@ -134,10 +141,10 @@ Usage: qs_host.sh {start|stop|restart|status|checkup|console|run} [NAME]
         NAME      name of process (default: bluesky_queueserver-)
 ```
 
-Alternatively, run the QS host's startup command directly within the `./qserver/`
+Alternatively, run the QS host's startup command directly within the `./src/YOUR_INSTRUMENT_NAME/qserver/`
 subdirectory.
 
 ```bash
-cd ./qserver
+cd ./src/YOUR_INSTRUMENT_NAME/qserver
 start-re-manager --config=./qs-config.yml
 ```
