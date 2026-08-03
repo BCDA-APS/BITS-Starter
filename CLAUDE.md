@@ -12,7 +12,7 @@ does not yet exist in a fresh checkout.
 
 When `init_repo.yml` runs on a repo created from this template (any repo other than
 `bcda-aps/bits-starter`), `.github/workflows/init_repo.sh` renames the package from
-`bits_instrument`/`APSBITS` to the new repo name, strips the template README section, and
+`bits_instrument` to the new repo name, strips the template README section, and
 deletes itself. This is a one-time, CI-side rename — don't expect it locally.
 
 ## Two parallel dependency stacks (know which one you're in)
@@ -20,22 +20,24 @@ deletes itself. This is a one-time, CI-side rename — don't expect it locally.
 - **pixi** (`pixi.toml`, conda-forge, this `pixi_compatibility` branch) — the newer path,
   pins exact versions (bluesky 1.14.4, ophyd 1.11.0, Python 3.12) and defines run tasks.
   Linux-only (`platforms = ["linux-64"]`).
-- **pip/conda** (`pyproject.toml`, README) — `conda create … python=3.11; pip install apsbits`.
-  CI (`code.yml`) uses this path on **Python 3.11**.
+- **pip/conda** (`pyproject.toml`, README) — `conda create … python=3.12; pip install apsbits`.
+  CI (`code.yml`) uses this path on **Python 3.12**.
 
-These disagree on Python version (3.12 in pixi vs 3.11 in pyproject/CI) and the two are *not*
-kept in sync automatically. `pyproject.toml` is the installable package definition; `pixi.toml`
+Both target Python 3.12, but are *not* kept in sync: pixi pins exact versions while the pip
+path floats newer (verified: pip resolves bluesky 1.15.1 / ophyd 1.11.2 vs pixi's 1.14.4 / 1.11.0). `pyproject.toml` is the installable package definition; `pixi.toml`
 is the dev/run environment + task runner.
 
 ## Placeholder names you must replace
 
-`pixi.toml` still contains leftover names from the 11-BM beamline instance it was copied from —
-these are **placeholders**, not working references, until a real instrument is scaffolded:
-- `bm11_b` / `bm11_b_qserver` in the `[tasks]` (e.g. `start`, `qs_restart`) → should be `<instrument>` / `<instrument>_qserver`
-- `11bm-bits = { path = ".", editable = true }` in `[pypi-dependencies]` → your package name
-- `qs_start_manager` references `qs-confdig.yml` (typo for `qs-config.yml`)
+Two kinds of placeholder live in these files:
+- The `instrument` token in the `pixi.toml` `[tasks]` table (`start`, `qs_host`, `qs_restart`,
+  `qs_start_manager`) is the create-bits module name — replace it with your instrument name
+  after running `create-bits <name>` (a `TODO` comment in `[tasks]` marks this).
+- `bits_instrument` — the `[workspace].name` and editable self-install key in `pixi.toml`, plus
+  `[project].name` in `pyproject.toml` — is renamed to the repository name automatically by
+  `init_repo.sh` on first push; don't hand-edit it.
 
-If a pixi task fails with a missing module/path, suspect one of these stale names first.
+If a pixi task fails with a missing module/path, suspect the unreplaced `instrument` token first.
 
 ## Common commands
 
@@ -44,7 +46,7 @@ If a pixi task fails with a missing module/path, suspect one of these stale name
 pixi install                       # solve + create default env
 pixi shell -e dev                  # enter dev env (ruff, pytest, mypy, pre-commit)
 
-# Scaffold a new instrument into src/ (creates src/<name>/ and src/<name>_qserver/)
+# Scaffold a new instrument into src/ (needs empty src/ + scripts/; creates src/<name>/ incl. qserver/, and scripts/<name>_qs_host.sh)
 create-bits <instrument_name>
 pip install -e .
 
@@ -53,7 +55,7 @@ pixi run start                     # ipython -i loading <name>.startup (MPLBACKE
 # or manually:  ipython  ->  from <instrument_name>.startup import *
 
 # Queueserver (host process manages the RunEngine; clients attach to it)
-pixi run qs_restart                # = src/<name>_qserver/qs_host.sh restart
+pixi run qs_restart                # = scripts/<name>_qs_host.sh restart
 pixi run qs_host status            # start|stop|restart|status|checkup|console|run
 queue-monitor &                    # GUI client
 
@@ -84,10 +86,11 @@ src/<instrument>/
   devices/              # ophyd Device classes referenced by devices.yml
   plans/                # bluesky plans (incl. the sim_*_plan demos)
   callbacks/            # NeXus / SPEC file writers, custom subscriptions
+  qserver/
+    qs-config.yml       # queueserver host config
+    user_group_permissions.yaml
   suspenders/  utils/
-src/<instrument>_qserver/
-  qs-config.yml         # queueserver host config
-  qs_host.sh            # start/stop/restart the QS host (uses `screen`)
+scripts/<instrument>_qs_host.sh   # start/stop/restart the QS host (uses `screen`)
 ```
 
 **`startup.py` is the control flow** — understanding it is the fastest way to understand the
@@ -110,7 +113,7 @@ Two cross-cutting behaviors to keep in mind when editing:
 
 - `code.yml`: `lint` job (`pre-commit run --all-files`) must pass before the `test-matrix`
   job runs. Tests install OS Qt/X11 libs + xvfb (this is a PyQt app), use micromamba, and
-  currently run **only Python 3.11** (3.12/3.13 commented out, "waiting for upstream packages").
+  currently run **only Python 3.12** (3.13 commented out, "waiting for upstream packages").
 - Active style is **ruff** (line-length 88) via pre-commit, which "replaces Flake8, isort,
   pydocstyle, pyupgrade, Black". The `[tool.black]`/`[tool.flake8]` blocks in `pyproject.toml`
   (line-length 115) are vestigial and not enforced by CI — follow ruff (88).

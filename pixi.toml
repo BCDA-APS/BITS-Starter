@@ -2,7 +2,7 @@
 authors = [
     "Eric Codrea <ecodrea@anl.gov>" ,
     "Pete Jemian <prjemian+bits@gmail.com>",
-    "Rafael Vescovi <rvescovi@anl.gov",
+    "Rafael Vescovi <rvescovi@anl.gov>",
     ]
 
 channels = ["conda-forge"]
@@ -64,7 +64,6 @@ ophyd-async = { version = ">0.10.0", extras = ["ca", "pva"] }
 bits_instrument = { path = ".", editable = true }
 
 [feature.dev.dependencies]
-isort = "*"
 mypy = "*"
 pre-commit = "*"
 pytest = "*"
